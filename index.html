@@ -286,6 +286,9 @@ footer a:hover { text-decoration: underline; }
 }
 :root { color-scheme: dark; }
 :root[data-theme="light"] { color-scheme: light; }
+
+/* Footer links are underlined so they never rely on colour alone (WCAG 1.4.1). */
+footer a { text-decoration: underline; text-underline-offset: 0.15em; }
 </style>
 </head>
 <body>
@@ -301,15 +304,15 @@ footer a:hover { text-decoration: underline; }
 <p class="lede">When a webhook lands in your inbox or staging logs and the signature isn't matching, paste the headers and body here to debug. Everything runs locally; the signing secret never leaves the page.</p>
 
 <div class="tabs" role="tablist">
-  <button class="tab active" data-target="stripe" type="button">Stripe</button>
-  <button class="tab" data-target="github" type="button">GitHub</button>
-  <button class="tab" data-target="slack" type="button">Slack</button>
-  <button class="tab" data-target="twilio" type="button">Twilio</button>
-  <button class="tab" data-target="generic" type="button">Generic HMAC</button>
+  <button class="tab active" data-target="stripe" type="button" role="tab" id="tab-stripe" aria-selected="true" aria-controls="panel-stripe">Stripe</button>
+  <button class="tab" data-target="github" type="button" role="tab" id="tab-github" aria-selected="false" aria-controls="panel-github">GitHub</button>
+  <button class="tab" data-target="slack" type="button" role="tab" id="tab-slack" aria-selected="false" aria-controls="panel-slack">Slack</button>
+  <button class="tab" data-target="twilio" type="button" role="tab" id="tab-twilio" aria-selected="false" aria-controls="panel-twilio">Twilio</button>
+  <button class="tab" data-target="generic" type="button" role="tab" id="tab-generic" aria-selected="false" aria-controls="panel-generic">Generic HMAC</button>
 </div>
 
 <!-- STRIPE -->
-<div class="panel active" id="panel-stripe">
+<div class="panel active" id="panel-stripe" role="tabpanel" aria-labelledby="tab-stripe">
   <div class="intro">
     Stripe sends a <code>Stripe-Signature</code> header containing <code>t=...</code> (timestamp) and one or more <code>v1=...</code> signatures. The signed payload is <code>{timestamp}.{body}</code>, signed with HMAC-SHA256 using your webhook signing secret (<code>whsec_...</code>).
   </div>
@@ -335,7 +338,7 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <!-- GITHUB -->
-<div class="panel" id="panel-github">
+<div class="panel" id="panel-github" role="tabpanel" aria-labelledby="tab-github">
   <div class="intro">
     GitHub sends an <code>X-Hub-Signature-256</code> header in the form <code>sha256=&lt;hex&gt;</code>. Signature is HMAC-SHA256 of the raw request body using your webhook secret. (The legacy <code>X-Hub-Signature</code> uses SHA-1 and should not be relied on.)
   </div>
@@ -359,7 +362,7 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <!-- SLACK -->
-<div class="panel" id="panel-slack">
+<div class="panel" id="panel-slack" role="tabpanel" aria-labelledby="tab-slack">
   <div class="intro">
     Slack sends <code>X-Slack-Signature</code> (form <code>v0=&lt;hex&gt;</code>) and <code>X-Slack-Request-Timestamp</code>. The signed string is <code>v0:{timestamp}:{body}</code>, signed with HMAC-SHA256 using the signing secret found in your Slack app's Basic Information page.
   </div>
@@ -387,7 +390,7 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <!-- TWILIO -->
-<div class="panel" id="panel-twilio">
+<div class="panel" id="panel-twilio" role="tabpanel" aria-labelledby="tab-twilio">
   <div class="intro">
     Twilio sends an <code>X-Twilio-Signature</code> header. The signed string is the full URL plus, for POST requests, the form-encoded parameters sorted alphabetically and concatenated. Signature is HMAC-SHA1 base64-encoded, using your Twilio auth token.
   </div>
@@ -415,7 +418,7 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <!-- GENERIC -->
-<div class="panel" id="panel-generic">
+<div class="panel" id="panel-generic" role="tabpanel" aria-labelledby="tab-generic">
   <div class="intro">
     For any service that signs the raw body with HMAC. Choose the hash, paste the secret, paste the body, paste the expected signature in hex or base64.
   </div>
@@ -476,9 +479,10 @@ themeBtn.addEventListener("click", () => {
 // Tabs
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach((t) => { t.classList.remove("active"); t.setAttribute("aria-selected", "false"); });
     document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
     tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
     $("panel-" + tab.dataset.target).classList.add("active");
   });
 });
