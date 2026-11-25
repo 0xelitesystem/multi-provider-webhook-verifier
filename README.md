@@ -90,6 +90,6 @@ MIT.
 
 ## Related
 
-- [jwt-inspector](https://github.com/0xelitesystem/jwt-inspector), decode and verify JWTs
+- [jwt-verify-in-browser](https://github.com/0xelitesystem/jwt-verify-in-browser), decode and verify JWTs
 - [webhook-inspector](https://github.com/0xelitesystem/webhook-inspector), inspect webhook payloads
 - [oauth-flow-debugger](https://github.com/0xelitesystem/oauth-flow-debugger), decode OAuth URLs
