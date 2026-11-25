@@ -91,5 +91,5 @@ MIT.
 ## Related
 
 - [jwt-verify-in-browser](https://github.com/0xelitesystem/jwt-verify-in-browser), decode and verify JWTs
-- [webhook-inspector](https://github.com/0xelitesystem/webhook-inspector), inspect webhook payloads
+- [service-worker-webhook-inspector](https://github.com/0xelitesystem/service-worker-webhook-inspector), inspect webhook payloads
 - [oauth-url-linter](https://github.com/0xelitesystem/oauth-url-linter), decode OAuth URLs
