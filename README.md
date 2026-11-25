@@ -1,8 +1,8 @@
-# Webhook Signature Verifier
+# Multi-Provider Webhook Verifier
 
 Verify webhook signatures from Stripe, GitHub, Slack, Twilio, and any HMAC-based service. Runs entirely in your browser.
 
-**Live demo:** https://0xelitesystem.github.io/webhook-signature-verifier/
+**Live demo:** https://0xelitesystem.github.io/multi-provider-webhook-verifier/
 
 ## Use
 
@@ -62,8 +62,8 @@ The verifier code is in `index.html`. Keep it readable; this isn't a place for c
 ## Run locally
 
 ```bash
-git clone https://github.com/0xelitesystem/webhook-signature-verifier
-cd webhook-signature-verifier
+git clone https://github.com/0xelitesystem/multi-provider-webhook-verifier
+cd multi-provider-webhook-verifier
 # Open index.html
 ```
 
