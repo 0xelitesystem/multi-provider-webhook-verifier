@@ -211,6 +211,7 @@ button:hover { border-color: var(--crypto); }
   font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 0.8rem;
   color: var(--ink);
+  white-space: pre-wrap;
   word-break: break-all;
 }
 .intro {
@@ -523,10 +524,20 @@ function constantTimeEqual(a, b) {
   return r === 0;
 }
 
+// Messages and details carry pasted request values: set them as text, never as HTML.
 function showResult(id, type, msg, detail) {
   const el = $(id);
   el.className = "result show " + type;
-  el.innerHTML = `<div>${msg}</div>` + (detail ? `<div class="result-detail">${detail}</div>` : "");
+  el.textContent = "";
+  const m = document.createElement("div");
+  m.textContent = msg;
+  el.appendChild(m);
+  if (detail) {
+    const d = document.createElement("div");
+    d.className = "result-detail";
+    d.textContent = detail;
+    el.appendChild(d);
+  }
 }
 
 // Stripe
